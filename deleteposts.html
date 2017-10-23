@@ -1,0 +1,48 @@
+<html>
+<body>
+Which posts do you want to delete?<br>
+<form action="deleteposts.php" method="post">
+
+
+  <?php
+  $mysqli = new mysqli("MYSQL.eecs.ku.edu", "kcieslak", "password", "kcieslak");
+
+  /* check connection */
+  if ($mysqli->connect_errno) {
+      echo "connnection failed";
+      exit();
+  }
+
+
+
+  $query = "SELECT author_Id, content, post_Id FROM Posts ORDER BY author_Id;";
+
+
+  if ($result = $mysqli->query($query)) {
+    //echo "???\n";
+      // echo "<select name="un">";
+      /* fetch associative array */
+      while ($row = $result->fetch_assoc()) {
+        //  printf ("%s (%s)\n", $row["User_Id"],"\n")
+    // echo $row["User_Id"];
+    // echo "<br>";
+    //echo '<input type="checkbox" name="remove" value="$row["author_Id"]" checked> $row["author_Id", "content"]<br>';
+    printf("<input type='checkbox' name='remove[]' value='%s' > %s: %s<br>", $row["post_Id"], $row["author_Id"], $row["content"]);
+    // hile ($row = mysql_fetch_assoc($result)) {
+    //   echo $row["userid"];
+      }
+      // echo "</select>";// Closing of list box
+
+      /* free result set */
+      $result->free();
+  }
+  else{echo "you suck.";} //this is a personal check ;)
+  /* close connection */
+  $mysqli->close();
+
+  ?>
+    <input type="submit" value="Submit">
+</form>
+
+</body>
+</html>
