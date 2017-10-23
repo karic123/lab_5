@@ -9,19 +9,20 @@ if ($mysqli->connect_errno) {
 }
 $user = $_POST[un];
 if($user != ""){
-  $sql = "INSERT INTO Users (User_Id)
-  VALUES ('$_POST[un]');";
+  $sql = "INSERT INTO Users (User_Id) VALUES ('$_POST[un]');";
+$poop = mysqli_query($mysqli, $sql);
+echo $poop;
+  if ($poop) {
 
-  if (mysqli_query($mysqli, $sql)) {
-      echo "New record created successfully<br>";
+      echo " New record created successfully<br>";
   } else {
-      echo "Error: " . $sql . "<br>" . mysqli_error($mysqli) . "<br>";
+      echo "Error: " . $sql . "<br>" . mysqli_error($mysqli) . "<br><br>";
   }
 }
 else {
   echo "Error: Input cannot be blank.<br>";
 }
-
+echo "Here are the current users: <br>";
 $query = "SELECT User_Id FROM Users;";
 if ($result = $mysqli->query($query)) {
 	//echo "???\n";
